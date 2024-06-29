@@ -1,0 +1,24 @@
+from PIL import Image
+def encrypt_image(image):
+    encrypted_image=image.copy()
+    pixels=encrypted_image.load()
+    for x in range(image.size[0]):
+       for y in range(image.size[1]):
+           r,g,b=pixels[x,y]
+           pixels[x,y]=(r,b,g)
+    return encrypted_image
+       
+def decrypt_image(encrypted_image):
+    return encrypt_image(encrypted_image)
+
+image=Image.open(r"C:\Users\ss\Downloads\sample.bmp")
+encrypted_image=encrypt_image(image)
+encrypted_image.save(r"C:\Users\ss\Downloads\encrypted.bmp")
+decrypted_image = decrypt_image(encrypted_image)
+decrypted_image.save(r"C:\Users\ss\Downloads\decrypted.bmp")
+
+
+
+
+
+
