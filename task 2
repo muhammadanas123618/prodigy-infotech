@@ -11,7 +11,7 @@ def encrypt_image(image):
 def decrypt_image(encrypted_image):
     return encrypt_image(encrypted_image)
 
-image=Image.open(r"C:\Users\ss\Downloads\sample.bmp")
+image=Image.open(r"C:\Users\ss\Downloads\sample1.bmp")
 encrypted_image=encrypt_image(image)
 encrypted_image.save(r"C:\Users\ss\Downloads\encrypted.bmp")
 decrypted_image = decrypt_image(encrypted_image)
