@@ -1,0 +1,31 @@
+from scapy.all import sniff
+from scapy.layers.inet import IP, TCP, UDP, ICMP
+
+def packet_callback(packet):
+    # Check if the packet has an IP layer
+    if IP in packet:
+        iplayer = packet[IP]
+        print(f"[IP] {iplayer.src} -> {iplayer.dst}")
+        
+        # Check for different protocols and print relevant information
+        if TCP in packet:
+            tcplayer = packet[TCP]
+            print(f"[TCP] Source Port: {tcplayer.sport}, Destination Port: {tcplayer.dport}")
+            print(f"Payload: {bytes(tcplayer.payload)}")
+        elif UDP in packet:
+            udplayer = packet[UDP]
+            print(f"[UDP] Source Port: {udplayer.sport}, Destination Port: {udplayer.dport}")
+            print(f"Payload: {bytes(udplayer.payload)}")
+        elif ICMP in packet:
+            icmplayer = packet[ICMP]
+            print(f"[ICMP] Type: {icmplayer.type}, Code: {icmplayer.code}")
+            print(f"Payload: {bytes(icmplayer.payload)}")
+        else:
+            print(f"[Other] Protocol: {iplayer.proto}")
+            print(f"Payload: {bytes(iplayer.payload)}")
+    else:
+        print("Non-IP Packet")
+
+# Start sniffing
+print("Starting packet capture...")
+sniff(prn=packet_callback, store=0)
